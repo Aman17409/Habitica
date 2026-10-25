@@ -1,0 +1,332 @@
+/* ============================================================
+   Habit Tracker — styles
+   Themes: dark (soft bluish-purple) and light (soft off-white).
+   Everything is responsive from a small phone up to a wide PC.
+   ============================================================ */
+
+:root {
+  --radius: 14px;
+  --radius-sm: 9px;
+  --maxw: 920px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ---- dark: soft bluish-purple, low contrast, easy on the eyes ---- */
+[data-theme="dark"] {
+  --bg: #151223;
+  --surface: #1e1a30;
+  --surface-2: #262040;
+  --text: #e8e5f4;
+  --text-muted: #a49dc4;
+  --border: #322b4d;
+  --accent: #9b8cf0;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(155, 140, 240, 0.18);
+  --done: #8b7fd4;
+  --danger: #e08aa6;
+  --shadow: 0 8px 26px rgba(0, 0, 0, 0.38);
+}
+
+/* ---- light: soft off-white ---- */
+[data-theme="light"] {
+  --bg: #f7f6fb;
+  --surface: #ffffff;
+  --surface-2: #f1eff8;
+  --text: #2b2740;
+  --text-muted: #6f6889;
+  --border: #e4e1ef;
+  --accent: #6c5fc7;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(108, 95, 199, 0.12);
+  --done: #6c5fc7;
+  --danger: #c0506e;
+  --shadow: 0 8px 22px rgba(60, 50, 120, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+a { color: var(--accent); text-decoration: none; }
+
+/* ---------------- top bar ---------------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 18px 16px 12px;
+  background: linear-gradient(var(--bg) 70%, transparent);
+}
+
+.brand h1 { font-size: 1.4rem; margin: 0; letter-spacing: 0.2px; }
+.brand p { margin: 2px 0 0; font-size: 0.85rem; }
+
+.actions { display: flex; gap: 8px; }
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, transform 0.06s;
+}
+.icon-btn:hover { border-color: var(--accent); }
+.icon-btn:active { transform: scale(0.97); }
+
+main {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 8px 16px 64px;
+}
+
+/* ---------------- cards ---------------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  margin-bottom: 14px;
+}
+
+.row { display: flex; align-items: center; gap: 10px; }
+.between { justify-content: space-between; }
+.muted { color: var(--text-muted); }
+h2 { font-size: 0.98rem; margin: 0; font-weight: 600; }
+
+/* ---------------- heatmap cells ---------------- */
+
+.week-strip {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  max-width: 460px;
+}
+
+.daycell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.daycell .dow { font-size: 0.66rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+.daycell .dotday { font-size: 0.6rem; color: var(--text-muted); }
+
+.cell {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  transition: background 0.15s, border-color 0.15s, transform 0.06s;
+}
+.cell--done { background: var(--done); border-color: var(--done); }
+.cell--today { box-shadow: 0 0 0 2px var(--accent); }
+.cell--future { opacity: 0.35; cursor: default; }
+.daycell:hover .cell:not(.cell--future) { transform: scale(1.06); }
+
+/* combined strip uses inline opacity for intensity */
+.cell--combo { border-color: var(--border); }
+
+/* ---------------- habit cards ---------------- */
+
+.habits {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+@media (min-width: 720px) {
+  .habits { grid-template-columns: 1fr 1fr; }
+}
+
+.habit { margin-bottom: 0; }
+
+.habit-head { margin-bottom: 12px; }
+
+.habit-title { display: flex; align-items: center; gap: 9px; min-width: 0; }
+.habit-title .dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); flex: 0 0 auto;
+}
+.habit-title h3 {
+  font-size: 1rem; margin: 0; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.habit-meta { display: flex; align-items: center; gap: 10px; }
+
+.streak {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.streak b { color: var(--text); }
+
+.tick {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface-2);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s, transform 0.08s;
+  flex: 0 0 auto;
+}
+.tick:hover { border-color: var(--accent); }
+.tick:active { transform: scale(0.94); }
+.tick::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 12px; height: 7px;
+  border-left: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+  transform: rotate(-45deg) translate(1px, -1px);
+  transition: border-color 0.15s;
+}
+.tick--done { background: var(--done); border-color: var(--done); }
+.tick--done::after { border-left-color: var(--accent-ink); border-bottom-color: var(--accent-ink); }
+
+.habit-tools {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.link-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+}
+.link-btn:hover { background: var(--surface-2); color: var(--text); }
+.link-btn.danger:hover { color: var(--danger); }
+
+/* inline note editor */
+.note-editor { margin-top: 10px; display: none; }
+.note-editor.open { display: block; }
+.note-editor textarea {
+  width: 100%;
+  min-height: 64px;
+  resize: vertical;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+}
+.note-hint { font-size: 0.72rem; margin: 6px 0 0; }
+
+/* ---------------- add habit ---------------- */
+
+.add { display: flex; gap: 10px; }
+.add input {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: var(--font);
+}
+.add input:focus { outline: none; border-color: var(--accent); }
+
+.btn {
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter 0.15s, transform 0.06s;
+}
+.btn:hover { filter: brightness(1.06); }
+.btn:active { transform: scale(0.98); }
+
+/* ---------------- sync status ---------------- */
+
+.sync-status { font-size: 0.8rem; margin: 4px 2px 0; min-height: 1.2em; }
+.sync-status.error { color: var(--danger); }
+
+/* ---------------- stats page ---------------- */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 820px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+  max-width: 460px;
+}
+.month-grid .dow {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  text-align: center;
+  text-transform: uppercase;
+}
+.month-grid .cell { border-radius: 6px; }
+.month-grid .pad { visibility: hidden; }
+
+.stat-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 0.88rem; }
+.stat-row + .stat-row { border-top: 1px solid var(--border); }
+
+.legend { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; }
+.legend .cell { width: 14px; height: 14px; aspect-ratio: auto; border-radius: 4px; }
+
+.empty-note { color: var(--text-muted); font-size: 0.9rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

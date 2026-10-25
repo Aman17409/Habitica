@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Tracker</title>
+  <meta name="description" content="A minimal, ad-free habit tracker. Data stays in your own Google Drive.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Habits</h1>
+      <p id="todayLabel" class="muted"></p>
+    </div>
+    <div class="actions">
+      <button id="themeToggle" class="icon-btn" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+      <a href="stats.html" class="icon-btn" title="Stats &amp; heatmaps" aria-label="Stats">▦</a>
+      <button id="syncBtn" class="icon-btn" title="Sync with Google Drive" aria-label="Sync">⟳</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="row between" style="margin-bottom:12px">
+        <h2>This week · all habits</h2>
+        <span id="combinedStat" class="muted" style="font-size:.8rem"></span>
+      </div>
+      <div id="combinedWeek" class="week-strip"></div>
+    </section>
+
+    <section id="habitList" class="habits"></section>
+
+    <section class="card add">
+      <input id="newHabit" type="text" placeholder="Add a habit…" maxlength="60" aria-label="New habit name">
+      <button id="addBtn" class="btn">Add habit</button>
+    </section>
+
+    <p id="syncStatus" class="muted sync-status"></p>
+  </main>
+
+  <template id="habitTemplate">
+    <article class="habit card">
+      <div class="habit-head row between">
+        <div class="habit-title">
+          <span class="dot"></span>
+          <h3 class="name"></h3>
+        </div>
+        <div class="habit-meta">
+          <span class="streak"></span>
+          <button class="tick" title="Mark today" aria-label="Mark today"></button>
+        </div>
+      </div>
+      <div class="week-strip"></div>
+      <div class="habit-tools">
+        <button class="link-btn note-btn">Note</button>
+        <button class="link-btn rename-btn">Rename</button>
+        <button class="link-btn move-btn" data-dir="-1">↑</button>
+        <button class="link-btn move-btn" data-dir="1">↓</button>
+        <button class="link-btn danger delete-btn">Delete</button>
+      </div>
+      <div class="note-editor">
+        <textarea placeholder="Optional note for today…"></textarea>
+        <p class="note-hint muted">Saved automatically. Notes are per habit, per day.</p>
+      </div>
+    </article>
+  </template>
+
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

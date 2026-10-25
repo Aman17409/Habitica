@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habit Tracker · Stats</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Stats</h1>
+      <p id="monthLabel" class="muted"></p>
+    </div>
+    <div class="actions">
+      <a href="index.html" class="icon-btn" title="Back to habits" aria-label="Back">←</a>
+      <button id="themeToggle" class="icon-btn" title="Toggle light / dark" aria-label="Toggle theme">◐</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>This month · all habits</h2>
+      <div id="combinedMonth" class="month-grid"></div>
+      <div class="legend">
+        <span class="cell cell--done"></span> done
+        <span class="cell" style="margin-left:12px"></span> not done
+      </div>
+    </section>
+
+    <div id="statCards" class="stats-grid"></div>
+
+    <section class="card" id="overallCard">
+      <h2>Overview</h2>
+      <div id="overall"></div>
+    </section>
+  </main>
+
+  <template id="statCardTemplate">
+    <section class="card">
+      <div class="row between" style="margin-bottom:6px">
+        <div class="habit-title"><span class="dot"></span><h3 class="name"></h3></div>
+        <span class="streak"></span>
+      </div>
+      <div class="month-grid"></div>
+      <div class="stat-rows"></div>
+    </section>
+  </template>
+
+  <script type="module" src="js/charts.js"></script>
+</body>
+</html>
