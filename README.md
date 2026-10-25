@@ -1,4 +1,4 @@
-# Habitica
+# Habit Tracker
 
 A minimal, ad-free habit tracker that runs as a static site on **GitHub Pages**
 and keeps your data in **your own Google Drive**. No accounts on our side, no
